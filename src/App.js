@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './components/log.png';
 import './App.css';
 import {Home} from './components/Home.js';
+//import {Checkbox} from './components/Checkbox.js';
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
         <p className="App-intro">
         </p>
         <Home/>
+        {/* <Checkbox/> */}
       </div>
     );
   }
