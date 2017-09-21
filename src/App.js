@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import logo from './components/log.png';
 import './App.css';
-import {Home} from './components/Home.js';
+import {Todocontainer} from './components/Todocontainer.js';
 //import {Checkbox} from './components/Checkbox.js';
+// import {Textbox} from './components/Textbox.js';
 
 class App extends Component {
   render() {
-    return (
+    return ( 
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -15,8 +16,8 @@ class App extends Component {
         </div>
         <p className="App-intro">
         </p>
-        <Home/>
-        {/* <Checkbox/> */}
+        <Todocontainer/>
+        {/* <Textbox/> */}        
       </div>
     );
   }
