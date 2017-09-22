@@ -6,24 +6,15 @@ export class Todocontainer extends Component {
   constructor(props){
     super(props);
     this.state={
-      data:[],
-      isChecked: false,    
-      todoBox:null 
+      data:[]
     };
-    this.handleChange=this.handleChange.bind(this);
   }
-  handleKeyPress(target) {
-    if(target.charCode ===13){
-            alert('Enter clicked!!!');    
-    }
-}
-  handleChange({target}){
-    this.setState({
-        [target.name]:target.value        
-    });
-}
 
 componentDidMount(){
+  this.fetchTodos()  
+}
+
+fetchTodos(){
   fetch(URL,{
     headers:{
       'Accept':'application/json',
@@ -32,49 +23,26 @@ componentDidMount(){
   .then(results => {
       return results.json();
   }).then(data => {
-    let todo = data.map((value,key) => {             
-      return(
-        <div>              
-          <h4>                
-            <li> 
-              <label>
-                <input type="checkbox"
-                checked={this.state.isChecked}
-                onChange={this.change}   
-                value={!this.state.completed}     
-                />        
-              </label>
-                {value.title}                 
-            </li>  
-          </h4>
-        </div>                      
-      )
-    })  
-      this.setState({new:todo})                      
-  })  
-}
+    let todo = data.map((value,key) => {   
+      //  return   value.title;
+    })    
+     this.setState({data:data})                      
+   })
+} 
 
-change = () => {
-   this.setState({
-    isChecked: !this.state.isChecked,
-  });  
-}
-
-render(){
+render(){ 
+  // let  listItems =  (this.state.new) ? this.state.new.map( (data,i )=> <li key={i}>{data}</li> ) : null;
+    
+  let  listItems =   this.state.data.map( (data,i )=> <li key={i}> {data.completed ? <input type="checkbox" checked /> : <input type="checkbox" />
+}{data.title}</li> ) ;
+  
   return(
-    <div>
-      <input
-        type="text"
-        name="todoBox"
-        placeholder="Enter your new todo..."
-        value={this.state.todoBox}
-        onChange={this.handleChange}
-        onKeyPress={this.handleKeyPress}
-      />         
-      {this.state.new}
+    <div> 
+    <h4> <ul>
+    {listItems}
+    </ul>  </h4> 
     </div>
     
   );
 }
 }
-

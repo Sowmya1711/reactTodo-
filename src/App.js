@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import logo from './components/log.png';
 import './App.css';
 import {Todocontainer} from './components/Todocontainer.js';
-//import {Checkbox} from './components/Checkbox.js';
-// import {Textbox} from './components/Textbox.js';
+//import {Textbox} from './components/Textbox.js';
 
 class App extends Component {
   render() {
@@ -17,10 +16,11 @@ class App extends Component {
         <p className="App-intro">
         </p>
         <Todocontainer/>
-        {/* <Textbox/> */}        
+        {/* <Textbox/>         */}
       </div>
     );
   }
 }
 
 export default App;
+
