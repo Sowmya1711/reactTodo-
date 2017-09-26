@@ -7,10 +7,17 @@ const POST = "https://jsonprovider.herokuapp.com/todos?limit=50";
 export class Todocontainer extends Component {
   constructor(props) {
     super(props);
-    this.onSubmit = this.handleSubmit.bind(this);
+    this.onSubmit = this.handleSubmit.bind(this);    
     this.state = {
+      isChecked: false,
       data: []
     };
+    this.handleChecked = this.handleChecked.bind(this); 
+  }
+
+  handleChecked (event) {
+    console.log("event", event);
+    this.setState({isChecked: !this.state.isChecked});
   }
 
   componentDidMount() {
@@ -56,23 +63,20 @@ export class Todocontainer extends Component {
       .then(function (datt) {
         console.log(datt)
       });
-      this.updateCheck()
+      //this.updateCheck()
   }
 
 //To update checkbox
-  updateCheck(){
-    ('input[type="checkbox"]').change(function () {
-      let checked = false;
-      console.log("check")
-      if ((this.prop.checked) === true) {
-          checked = true;
-      }
-      else if ((this.prop.checked) === false) {
-          checked = false;
-      }
-      this.createCheck((this).prop("value"), checked);
-    });
-  } 
+/*   updateCheck(){
+    //let checking= false;
+    let txt;
+    if (this.state.isChecked ) {
+      txt = 'checked'
+    } else {
+      txt = 'unchecked'
+    }
+    this.createCheck()
+  }  */ 
 
 //For PUT method
 createCheck(id, checked){
@@ -92,8 +96,14 @@ createCheck(id, checked){
 }
 
   render() {
-    let listItems = this.state.data.map((data, i) => <li key={i}> {data.completed ? <input type="checkbox" checked  /> : <input type="checkbox" />
+    let listItems = this.state.data.map((data, i) => <li key={i}> {data.completed ? <input type="checkbox" checked  onChange={ this.handleChecked } /> : <input type="checkbox"  onChange={ this.handleChecked }/>
     }{data.title}</li>);
+      let txt;
+        if (this.state.isChecked ) {
+        txt = 'checked'
+        } else {
+        txt = 'unchecked'
+        }
 
     return (
       <div>
@@ -103,6 +113,8 @@ createCheck(id, checked){
             placeholder="Enter your new todo..."           
             ref="add"
           />    
+          <input type="checkbox" onChange={ this.handleChecked }/>
+          <p>checkbox is {txt}</p>
           <h4> <ul> {listItems}</ul>  </h4>
         </form>
       </div>
