@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 //import { Todoscontainer } from './Todoscontainer.js';
 
 const DESC = "https://jsonprovider.herokuapp.com/todos?limit=50&sort=id+desc";
-const POST = "https://jsonprovider.herokuapp.com/todos?limit=50";
 
 export class Todo extends Component {
 	constructor(props) {
 		super(props);
 		this.onSubmit = this.handleSubmit.bind(this);
 		this.state = {
-			data: []
+			data: [],
+			checked: true
 		};
 		this.handleChecked = this.handleChecked.bind(this);
 	}
@@ -46,26 +46,23 @@ export class Todo extends Component {
 			});
 		//this.updateCheck()
 	}
-	 /* updateCheck(e){
+	/* updateCheck(){
 		let txt;
-		if (this.state.ischecked)
-		 {
-			txt = 'checked'
-		} else {
-			txt = 'unchecked'
+        if (this.state.iscompleted) {
+        txt = 'checked'
+        } else {
+        txt = 'unchecked'
 		}
 		console.log(txt)
-	}    */
+	}   */
 	render() {
-	    let txt;
-		if (this.state.ischecked)
-		 {
-			txt = 'checked'
-		} else {
-			txt = 'unchecked'
+		 let txt;
+        if (this.state.ischecked) {
+        txt = 'checked'
+        } else {
+        txt = 'unchecked'
 		}
-		console.log(txt)  
- 
+		console.log(txt)
 		return (
 			<div>
 				<ul>
@@ -78,13 +75,13 @@ export class Todo extends Component {
 					</form>
 					{this.props.todos.map((value) => (
 						<li> <h4>
-							<input
-								type="checkbox"
+							<input 
+								type="checkbox" 
 								onChange={this.handleChecked}
-								//checked={value.completed} 
-								checked={this.state.ischecked}
+								checked={this.state.ischecked} 
+								checked={value.ischecked} 
 							/>
-							{/* <p>checkbox is {txt}</p> */}
+							 {/* <p>checkbox is {txt}</p>  */}
 							{value.title}
 						</h4> </li>
 					))}
