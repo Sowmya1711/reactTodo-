@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
+//import React, { Component, PropTypes } from 'react';
 //import { Todoscontainer } from './Todoscontainer.js';
+//import {Checkbox} from './Checkbox.js';
 
 const DESC = "https://jsonprovider.herokuapp.com/todos?limit=50&sort=id+desc";
-const POST = "https://jsonprovider.herokuapp.com/todos?limit=50";
+const POST = "https://jsonprovider.herokuapp.com/todos?";
 
 export class Todo extends Component {
 	constructor(props) {
 		super(props);
 		this.onSubmit = this.handleSubmit.bind(this);
 		this.state = {
-			data: []
+			data: [],
+			isChecked: false,
+			value: ''
 		};
-		this.handleChecked = this.handleChecked.bind(this);
+		this.toggleChange = this.toggleChange.bind(this)
 	}
 
-	handleChecked(event) {
-		console.log("event", event);
-		this.setState({ ischecked: !this.state.ischecked });
+	toggleChange = (event, data) => {
+		console.log(event.target.checked)
+		console.log(event.target.id)
+		
+		this.createCheck()
 	}
 
 	//for POST method
@@ -44,29 +50,30 @@ export class Todo extends Component {
 			.then(function (datt) {
 				console.log(datt)
 			});
-		//this.updateCheck()
 	}
-	 /* updateCheck(e){
-		let txt;
-		if (this.state.ischecked)
-		 {
-			txt = 'checked'
-		} else {
-			txt = 'unchecked'
+
+	//For PUT method
+	createCheck(id,checked) {
+		let datas = {
+			'completed': checked
 		}
-		console.log(txt)
-	}    */
+		fetch(POST + id, {
+			method: 'PUT',
+			mode: 'CORS',
+			body: JSON.stringify(datas),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => {
+			return res;
+		}).catch(err => err);
+		console.log(id)
+	}
+
 	render() {
-	    let txt;
-		if (this.state.ischecked)
-		 {
-			txt = 'checked'
-		} else {
-			txt = 'unchecked'
-		}
-		console.log(txt)  
- 
+
 		return (
+			
 			<div>
 				<ul>
 					<form onSubmit={this.onSubmit}>
@@ -78,19 +85,21 @@ export class Todo extends Component {
 					</form>
 					{this.props.todos.map((value) => (
 						<li> <h4>
-							<input
-								type="checkbox"
-								onChange={this.handleChecked}
-								//checked={value.completed} 
-								checked={this.state.ischecked}
+							<input type="checkbox"
+								//checked={this.state.isChecked}
+								onChange={this.toggleChange}
+								ref="check"
+								defaultChecked={value.completed}
+								id={value.id}
 							/>
-							{/* <p>checkbox is {txt}</p> */}
 							{value.title}
 						</h4> </li>
 					))}
+
 				</ul>
 			</div>
 		)
+
 	}
 }
 

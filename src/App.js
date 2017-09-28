@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './components/log.png';
 import './App.css';
 import {Todoscontainer} from './components/Todoscontainer.js';
+//import {Checkbox} from './components/Checkbox.js';
+
 
 class App extends Component {
   render() {
@@ -15,6 +17,7 @@ class App extends Component {
         <p className="App-intro">
         </p>
         <Todoscontainer/>
+         {/* <Checkbox/>    */}
       </div>
     );
   }
