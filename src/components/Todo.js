@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-//import React, { Component, PropTypes } from 'react';
-//import { Todoscontainer } from './Todoscontainer.js';
-//import {Checkbox} from './Checkbox.js';
 
 const DESC = "https://jsonprovider.herokuapp.com/todos?limit=50&sort=id+desc";
-const POST = "https://jsonprovider.herokuapp.com/todos?";
+const POST = "https://jsonprovider.herokuapp.com/todos/";
 
 export class Todo extends Component {
 	constructor(props) {
@@ -12,17 +9,13 @@ export class Todo extends Component {
 		this.onSubmit = this.handleSubmit.bind(this);
 		this.state = {
 			data: [],
-			isChecked: false,
-			value: ''
+			value: '',
 		};
-		this.toggleChange = this.toggleChange.bind(this)
+		this.toggleChange = this.toggleChange.bind(this);
 	}
 
-	toggleChange = (event, data) => {
-		console.log(event.target.checked)
-		console.log(event.target.id)
-		
-		this.createCheck()
+	toggleChange = (event) => {
+		this.createCheck(event.target.id, event.target.checked);
 	}
 
 	//for POST method
@@ -33,7 +26,6 @@ export class Todo extends Component {
 			userID: 1
 		}
 		e.preventDefault();
-		console.log("check", e)
 		e.target.todoBox.value = "";
 		let headers = {
 			'Content-Type': 'application/json',
@@ -53,27 +45,26 @@ export class Todo extends Component {
 	}
 
 	//For PUT method
-	createCheck(id,checked) {
-		let datas = {
-			'completed': checked
-		}
+	createCheck(id, checked) {
+		let data = {
+			completed: checked
+		};
 		fetch(POST + id, {
 			method: 'PUT',
 			mode: 'CORS',
-			body: JSON.stringify(datas),
+			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => {
 			return res;
 		}).catch(err => err);
-		console.log(id)
 	}
 
 	render() {
 
 		return (
-			
+
 			<div>
 				<ul>
 					<form onSubmit={this.onSubmit}>
@@ -83,8 +74,8 @@ export class Todo extends Component {
 							ref="add"
 						/>
 					</form>
-					{this.props.todos.map((value) => (
-						<li> <h4>
+					{this.props.todos.map((value, i) => (
+						<li key={i}> <h4>
 							<input type="checkbox"
 								//checked={this.state.isChecked}
 								onChange={this.toggleChange}

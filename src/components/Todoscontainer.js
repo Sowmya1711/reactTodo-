@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Todo} from './Todo.js';
 
 const DESC = "https://jsonprovider.herokuapp.com/todos?limit=50&sort=id+desc";
-//const POST = "https://jsonprovider.herokuapp.com/todos?limit=50";
 
 export class Todoscontainer extends Component {
     constructor(props) {
@@ -13,7 +12,7 @@ export class Todoscontainer extends Component {
     }
    
     componentDidMount() {
-      this.fetchTodos()
+      this.fetchTodos();
     }
   
   //fetch data's from api
